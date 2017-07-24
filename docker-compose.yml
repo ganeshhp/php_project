@@ -2,9 +2,7 @@ version: '2'
 
 services:
   product-service:
-    build: ./product
-    volumes:
-      - ./product:/usr/src/app
+    image: ganeshhp/php_project
     ports:
       - 5001:80
 
