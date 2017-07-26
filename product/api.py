@@ -13,7 +13,8 @@ class Product(Resource):
                          'Address',
                          'Department',
 			 'Age',
-			 'Sex',]
+			 'Sex',
+                         'hight',]
          }
 
 api.add_resource(Product, '/')
