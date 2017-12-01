@@ -13,7 +13,6 @@ class Product(Resource):
                          'Address',
                          'Department',
 			 'Age',
-			 'Sex',
 			 'Hight']
         }
 
