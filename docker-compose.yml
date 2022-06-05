@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  product-service:
+    image: ganeshhp/php_project:latest
+    ports:
+      - 5001:80
+
+  website:
+    image: php:apache
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 5000:80
+    depends_on:
+      - product-service
