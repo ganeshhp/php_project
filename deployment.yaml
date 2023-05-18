@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+  namespace: php-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: product-service
+          image: ganeshhp/php_project:latest
+          ports:
+            - name: port
+              containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: "/"
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website
+  namespace: php-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: website-server
+  template:
+    metadata:
+      labels:
+        app: website-server
+    spec:
+      containers:
+        - name: website
+          image: php:apache
+          ports:
+            - name: httpport
+              containerPort: 80
+              #livenessProbe:
+              #httpGet:
+              #  path: "/"
+              #  port: 80
+              #initialDelaySeconds: 90
+              #periodSeconds: 10
+              #timeoutSeconds: 5
+              #failureThreshold: 5
+            #          readinessProbe:
+            #httpGet:
+            #  path: "/"
+            #  port: 80
+            #initialDelaySeconds: 60
+            #periodSeconds: 10
+            #timeoutSeconds: 5
+            #failureThreshold: 3
+          volumeMounts:
+            - name: php-data
+              mountPath: /var/www/html
+      volumes:
+        - name: php-data
+          persistentVolumeClaim:
+              claimName: php-pv-claim
+
