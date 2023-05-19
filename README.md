@@ -5,6 +5,7 @@ Demo project for Docker-Compose
 For deployment of application services to Kubernetes cluster.
 
 1) run the command,
+
 $ kubectl create namespace php-project
 
 2) change the node name in volume.yaml file for node affinity as per the cluster worker node name.
